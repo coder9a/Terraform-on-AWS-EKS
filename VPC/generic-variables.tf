@@ -8,11 +8,13 @@ variable "aws_region" {
 variable "aws_access_key" {
   type        = string
   description = "Access key of AWS account"
+  default     = "AKIAWCBIPYVG4QADOK22"
 }
 
 variable "aws_secret_key" {
   type        = string
   description = "secret key of AWS account"
+  default     = "Uz0wA6YWuknHKUhxPzxPWAaqE9nnG/4nM0Aa+g7f"
 }
 # Environment Variable
 variable "environment" {
