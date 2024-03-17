@@ -1,5 +1,3 @@
-/*
-
 # AWS EC2 Instance Terraform Module
 # Bastion Host - EC2 Instance that will be created in VPC Public Subnet
 module "ec2_public" {
@@ -16,5 +14,3 @@ module "ec2_public" {
 
   tags = local.common_tags
 }
-
-*/
