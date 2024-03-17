@@ -1,3 +1,5 @@
+/*
+
 # Create AWS EKS Node Group - Private
 
 resource "aws_eks_node_group" "eks_ng_private" {
@@ -40,3 +42,5 @@ resource "aws_eks_node_group" "eks_ng_private" {
     Name = "Private-Node-Group"
   }
 }
+
+*/
