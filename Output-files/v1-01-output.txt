@@ -1,0 +1,36 @@
+Apply complete! Resources: 1 added, 0 changed, 1 destroyed.
+
+Outputs:
+
+azs = tolist([
+  "us-east-1a",
+  "us-east-1b",
+])
+cluster_arn = "arn:aws:eks:us-east-1:416696747341:cluster/HR-stag-eksdemo1"
+cluster_certificate_authority_data = "LS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0tCk1JSURCVENDQWUyZ0F3SUJBZ0lJTE5FelhxRmd3QW93RFFZSktvWklodmNOQVFFTEJRQXdGVEVUTUJFR0ExVUUKQXhNS2EzVmlaWEp1WlhSbGN6QWVGdzB5TkRBek1qQXlNVEF3TWpGYUZ3MHpOREF6TVRneU1UQTFNakZhTUJVeApFekFSQmdOVkJBTVRDbXQxWW1WeWJtVjBaWE13Z2dFaU1BMEdDU3FHU0liM0RRRUJBUVVBQTRJQkR3QXdnZ0VLCkFvSUJBUURYYURROWlObHU0a2YzTlJwcDQxbzJYdlNmWnBpajdGTFhWckZXV1Z0Z3YwWTNlY2RZcjBxVWJDaWoKeHBSdjk0L3VQQVBhSm5ZMWh4Qld3aWE4RVlTNkVTZEpOdEhralptM01OUVlsa3cvSEpOMSsxc1owNnVqOThLMwppMDhHSXNJUVM5NEdOQkV2OG5RdnVlck85MFJYeFZRbXQxRXpnSzdZL2VjS1hGRHJ1OTdzUThacGFHcElJbTZMCmFRZ09hQnN6Q0FZeHU2d1Uva2NZR2dqUWFwQno4UEIxcEdjOVZnRFh6bFpWTVVrWDZLYnhaZDlPUjN5Wmh1WnAKd3NGSW5pQ3Zsb0x6RjNqbmY5OWU1N0dXS3hYckJEYUtxSS9BZThmWFB2K0IrOGtMM0NvajZpdldyOVBDNTlydwpWMVhOU1FBaWNxL1dFOGpVN2toT3kvWE9PRS9yQWdNQkFBR2pXVEJYTUE0R0ExVWREd0VCL3dRRUF3SUNwREFQCkJnTlZIUk1CQWY4RUJUQURBUUgvTUIwR0ExVWREZ1FXQkJRazJzNDRhdmNtNmZRUzYxemVkeUc0WlIybGZUQVYKQmdOVkhSRUVEakFNZ2dwcmRXSmxjbTVsZEdWek1BMEdDU3FHU0liM0RRRUJDd1VBQTRJQkFRQVhDYnkwTytFSAoxUkRXcnI0djFEN1RCSWZNWDdBT3R3R0h0M01ZdmdLcnZ5V2FnQkVJcm1QZTdqczVOaTY4Y2dPMDdrb3k2RmUwCmFkZ042YUZBenh3WjVudFYvM05VcDNISFNGT3lObGZuVGFyZHFOSHc3Yk5rc0d4WDJOYTY4WUJUYVgxMkFncEwKbC84YkRzNzh3dXREa1p0WFFKcS9EYVJMaDg4YkVnc0xTZDlYU0s4ZUQ0K1BDQmIyY0JFck01cjVLUFVNWklGdgp3dEN4Szg0MkptbUNuK0dBWFZCZDJ3YnVQYUNzdHZFcjMrWGNYY3pKTFB6M1pCLzVmdytIaXRvdi9jcnVERjlwCnVCTzEvK2dJK2g1K3dGRFZzQncwWXZIa09aTFMwOTd3OHdQcG0xY3ZFUGl0Y0pidVhMRDJReS9zL1RCbWN4cXQKOVFJRlgrUEd4Q3RpCi0tLS0tRU5EIENFUlRJRklDQVRFLS0tLS0K"
+cluster_endpoint = "https://6CE103A3D8FC0F7324D11FFD0D065704.gr7.us-east-1.eks.amazonaws.com"
+cluster_iam_role_arn = "arn:aws:iam::416696747341:role/HR-stag-eks-master-role"
+cluster_iam_role_name = "HR-stag-eks-master-role"
+cluster_id = "HR-stag-eksdemo1"
+cluster_oidc_issuer_url = "https://oidc.eks.us-east-1.amazonaws.com/id/6CE103A3D8FC0F7324D11FFD0D065704"
+cluster_primary_security_group_id = "sg-057c982a97ff4a713"
+cluster_version = "1.28"
+ec2_bastion_eip = "52.4.242.21"
+ec2_bastion_public_instance_ids = "i-0205aa56bcf7a79ef"
+nat_public_ips = tolist([
+  "44.196.132.46",
+])
+node_group_public_arn = "arn:aws:eks:us-east-1:416696747341:nodegroup/HR-stag-eksdemo1/HR-stag-eks-ng-public/9ac72ed8-eb7f-5706-a7e0-7f18849720c7"
+node_group_public_id = "HR-stag-eksdemo1:HR-stag-eks-ng-public"
+node_group_public_status = "ACTIVE"
+node_group_public_version = "1.28"
+private_subnets = [
+  "subnet-0b639d1ed86f074cd",
+  "subnet-094745965c95864aa",
+]
+public_subnets = [
+  "subnet-01380f9b16ada93d5",
+  "subnet-0f3368a1c381c64ff",
+]
+vpc_cidr_block = "10.0.0.0/16"
+vpc_id = "vpc-0507a65841d680e53"

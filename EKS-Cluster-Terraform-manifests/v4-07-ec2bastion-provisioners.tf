@@ -13,7 +13,7 @@ resource "null_resource" "copy_ec2_keys" {
   ## File Provisioner: Copies the terraform-key.pem file to /tmp/terraform-key.pem
   provisioner "file" {
     source      = "/workspaces/Terraform-on-AWS-EKS/private-key/eks-terraform-key.pem"
-    destination = "/home/ec2-user/eks-terraform-key.pem"
+    destination = "/tmp/eks-terraform-key.pem"
     connection {
       type        = "ssh"
       user        = var.ec2_ssh_user
@@ -30,7 +30,7 @@ resource "null_resource" "copy_ec2_keys" {
   ## Local Exec Provisioner:  local-exec provisioner (Creation-Time Provisioner - Triggered during Create Resource)
   provisioner "local-exec" {
     command     = "echo VPC created on `date` and VPC ID: ${module.vpc.vpc_id} >> creation-time-vpc-id.txt"
-    working_dir = "local-exec-output-files/"
+    working_dir = "/workspaces/Terraform-on-AWS-EKS/local-exec-output-files/"
     #on_failure = continue
   }
 }
