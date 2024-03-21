@@ -11,7 +11,7 @@ terraform {
   # Adding Backend as S3 for Remote State Storage
   backend "s3" {
     bucket         = "terraform-eks-s3-bucket"
-    key            = "terraform.tfstate"
+    key            = "dev/eks-irsa-demo/terraform.tfstate"
     region         = "us-east-1"
     dynamodb_table = "eks-dynamodb-lock-table"
   }
