@@ -1,3 +1,5 @@
+/*
+
 # Get latest AMI ID for Amazon Linux2 OS
 data "aws_ami" "amzlinux2" {
   most_recent = true
@@ -19,3 +21,5 @@ data "aws_ami" "amzlinux2" {
     values = ["x86_64"]
   }
 }
+
+*/

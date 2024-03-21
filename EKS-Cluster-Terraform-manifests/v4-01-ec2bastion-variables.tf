@@ -1,3 +1,5 @@
+/*
+
 # AWS EC2 Instance Terraform Variables
 
 # AWS EC2 Instance Type
@@ -19,3 +21,5 @@ variable "ec2_ssh_user" {
   type        = string
   default     = "ec2-user"
 }
+
+*/

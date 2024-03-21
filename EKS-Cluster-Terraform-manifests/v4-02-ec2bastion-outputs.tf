@@ -1,3 +1,5 @@
+/*
+
 # AWS EC2 Instance Terraform Outputs
 # Public EC2 Instances - Bastion Host
 
@@ -12,3 +14,5 @@ output "ec2_bastion_eip" {
   description = "Elastic IP associated to the Bastion Host"
   value       = aws_eip.bastion_eip.public_ip
 }
+
+*/

@@ -1,3 +1,5 @@
+/*
+
 # Create a Null Resource and Provisioners
 resource "null_resource" "copy_ec2_keys" {
   depends_on = [module.ec2_public]
@@ -34,3 +36,5 @@ resource "null_resource" "copy_ec2_keys" {
     #on_failure = continue
   }
 }
+
+*/

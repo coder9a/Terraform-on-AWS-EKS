@@ -1,3 +1,5 @@
+/*
+
 # Create Elastic IP for Bastion Host
 # Resource - depends_on Meta-Argument
 resource "aws_eip" "bastion_eip" {
@@ -6,3 +8,5 @@ resource "aws_eip" "bastion_eip" {
   vpc        = true
   tags       = local.common_tags
 }
+
+*/
