@@ -1,4 +1,4 @@
-cluster_name = "eksdemo1"
+cluster_name = "eks_2.0"
 cluster_service_ipv4_cidr = "172.20.0.0/16"
 cluster_version = "1.28"
 cluster_endpoint_private_access = false
