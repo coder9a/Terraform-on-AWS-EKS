@@ -1,36 +1,32 @@
-Apply complete! Resources: 1 added, 0 changed, 1 destroyed.
-
-Outputs:
-
+aws_iam_openid_connect_provider_arn = "arn:aws:iam::416696747341:oidc-provider/oidc.eks.us-east-1.amazonaws.com/id/FB50479D75A63B6F0F213E58EA55D588"
+aws_iam_openid_connect_provider_extract_from_arn = "oidc.eks.us-east-1.amazonaws.com/id/FB50479D75A63B6F0F213E58EA55D588"
 azs = tolist([
   "us-east-1a",
   "us-east-1b",
 ])
-cluster_arn = "arn:aws:eks:us-east-1:416696747341:cluster/HR-stag-eksdemo1"
-cluster_certificate_authority_data = "LS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0tCk1JSURCVENDQWUyZ0F3SUJBZ0lJTE5FelhxRmd3QW93RFFZSktvWklodmNOQVFFTEJRQXdGVEVUTUJFR0ExVUUKQXhNS2EzVmlaWEp1WlhSbGN6QWVGdzB5TkRBek1qQXlNVEF3TWpGYUZ3MHpOREF6TVRneU1UQTFNakZhTUJVeApFekFSQmdOVkJBTVRDbXQxWW1WeWJtVjBaWE13Z2dFaU1BMEdDU3FHU0liM0RRRUJBUVVBQTRJQkR3QXdnZ0VLCkFvSUJBUURYYURROWlObHU0a2YzTlJwcDQxbzJYdlNmWnBpajdGTFhWckZXV1Z0Z3YwWTNlY2RZcjBxVWJDaWoKeHBSdjk0L3VQQVBhSm5ZMWh4Qld3aWE4RVlTNkVTZEpOdEhralptM01OUVlsa3cvSEpOMSsxc1owNnVqOThLMwppMDhHSXNJUVM5NEdOQkV2OG5RdnVlck85MFJYeFZRbXQxRXpnSzdZL2VjS1hGRHJ1OTdzUThacGFHcElJbTZMCmFRZ09hQnN6Q0FZeHU2d1Uva2NZR2dqUWFwQno4UEIxcEdjOVZnRFh6bFpWTVVrWDZLYnhaZDlPUjN5Wmh1WnAKd3NGSW5pQ3Zsb0x6RjNqbmY5OWU1N0dXS3hYckJEYUtxSS9BZThmWFB2K0IrOGtMM0NvajZpdldyOVBDNTlydwpWMVhOU1FBaWNxL1dFOGpVN2toT3kvWE9PRS9yQWdNQkFBR2pXVEJYTUE0R0ExVWREd0VCL3dRRUF3SUNwREFQCkJnTlZIUk1CQWY4RUJUQURBUUgvTUIwR0ExVWREZ1FXQkJRazJzNDRhdmNtNmZRUzYxemVkeUc0WlIybGZUQVYKQmdOVkhSRUVEakFNZ2dwcmRXSmxjbTVsZEdWek1BMEdDU3FHU0liM0RRRUJDd1VBQTRJQkFRQVhDYnkwTytFSAoxUkRXcnI0djFEN1RCSWZNWDdBT3R3R0h0M01ZdmdLcnZ5V2FnQkVJcm1QZTdqczVOaTY4Y2dPMDdrb3k2RmUwCmFkZ042YUZBenh3WjVudFYvM05VcDNISFNGT3lObGZuVGFyZHFOSHc3Yk5rc0d4WDJOYTY4WUJUYVgxMkFncEwKbC84YkRzNzh3dXREa1p0WFFKcS9EYVJMaDg4YkVnc0xTZDlYU0s4ZUQ0K1BDQmIyY0JFck01cjVLUFVNWklGdgp3dEN4Szg0MkptbUNuK0dBWFZCZDJ3YnVQYUNzdHZFcjMrWGNYY3pKTFB6M1pCLzVmdytIaXRvdi9jcnVERjlwCnVCTzEvK2dJK2g1K3dGRFZzQncwWXZIa09aTFMwOTd3OHdQcG0xY3ZFUGl0Y0pidVhMRDJReS9zL1RCbWN4cXQKOVFJRlgrUEd4Q3RpCi0tLS0tRU5EIENFUlRJRklDQVRFLS0tLS0K"
-cluster_endpoint = "https://6CE103A3D8FC0F7324D11FFD0D065704.gr7.us-east-1.eks.amazonaws.com"
-cluster_iam_role_arn = "arn:aws:iam::416696747341:role/HR-stag-eks-master-role"
-cluster_iam_role_name = "HR-stag-eks-master-role"
-cluster_id = "HR-stag-eksdemo1"
-cluster_oidc_issuer_url = "https://oidc.eks.us-east-1.amazonaws.com/id/6CE103A3D8FC0F7324D11FFD0D065704"
-cluster_primary_security_group_id = "sg-057c982a97ff4a713"
+cluster_arn = "arn:aws:eks:us-east-1:416696747341:cluster/franciscan-prod-eks_cluster"
+cluster_certificate_authority_data = "LS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0tCk1JSURCVENDQWUyZ0F3SUJBZ0lJT3hzSk1jcUdFbnd3RFFZSktvWklodmNOQVFFTEJRQXdGVEVUTUJFR0ExVUUKQXhNS2EzVmlaWEp1WlhSbGN6QWVGdzB5TkRBek1qUXdOVE0xTXpsYUZ3MHpOREF6TWpJd05UUXdNemxhTUJVeApFekFSQmdOVkJBTVRDbXQxWW1WeWJtVjBaWE13Z2dFaU1BMEdDU3FHU0liM0RRRUJBUVVBQTRJQkR3QXdnZ0VLCkFvSUJBUUNyWGdTKzRBZzB2SUJ4L1lJTVBrSFpXWVlyUDNHTi8vdFNjN0NLbmFlRXdKelRoN2Q2M3U1ZFBCV0EKR1VzZnk3ZnhzSHcvb0VoOHIrTlVrZFJyQ0JZbWlJZENQZk9FdnA5QUlZOWgrZnJWckhtQ0RzR3RYQ2Q0eS9sRgpPZnY5QUJEdWVCOTlJdVRJblI0ZmFiMDl1M2FLK3Q5OXNzR2M4cGwyaXFYWlpBWVVNVjZ3eWNWVDhHdTBYTWJZCmcyUUdWdkpJVEN4YzYrK1NuZVdycTV5UlNwQlRaSEZLZElTWXAzd3luMmVSclcyYXZhenZVaHA4cVBKbEE0LzMKOTdqWmY3Ylo0UDl3ZmtUblJWOUIvZDhxb0N2K2F2RWZWSDJiZkcrWTN0dkI1YzdFU2Q5Ui9uSE43Zm0wZ0lUNgp3MUNXalA3ZnhpaGFtTVNaVURsV0VubCtVMi9EQWdNQkFBR2pXVEJYTUE0R0ExVWREd0VCL3dRRUF3SUNwREFQCkJnTlZIUk1CQWY4RUJUQURBUUgvTUIwR0ExVWREZ1FXQkJRNHlKdG1DOCtYTTJIbUQ4dkk0eVZuUm1YNUxEQVYKQmdOVkhSRUVEakFNZ2dwcmRXSmxjbTVsZEdWek1BMEdDU3FHU0liM0RRRUJDd1VBQTRJQkFRQXlabVhDdjJYVAp4d1NSSWV0MEdTOS84Z2NSTC9XQVRJUGszSElzQXdUam95TmU1bWxaVE9RN3ZGTDVRU1NXSGVXRkZTMWFmRGVkClBRbDUyOGtuYU9sOGNLQXlqVVFWbGNMc3NValdySTM5ZVphclZLOGQyaitoaXdEaW0yVHFIU05vLzhCUnFrYnMKY1h4NnRjdTBlbGlCQzN0cDM3Q3VXdXBZTFJwOFhLNHlIQ3VBQVdJUytUM2dEV2Jxd0dENGo4TS9MdXNGMjNUVgpLdGVEaittcmg4OFgvaGtxcVVGaEZRR2t4WGJzcWJUaVl6bWVUSkJPcFZlKzh5b0swOEEyUVhleUw0L1RYb0s3CndvMVpoQVVVR0tnUk9YRk82WnNFT1lGeUo3RENFM0VhK3pPVmRTdFdIRENlY0pJNVBETjE0U3JkbjhEYzN3YzgKVXJaS0t5R24wSmRRCi0tLS0tRU5EIENFUlRJRklDQVRFLS0tLS0K"
+cluster_endpoint = "https://FB50479D75A63B6F0F213E58EA55D588.gr7.us-east-1.eks.amazonaws.com"
+cluster_iam_role_arn = "arn:aws:iam::416696747341:role/franciscan-prod-eks-master-role"
+cluster_iam_role_name = "franciscan-prod-eks-master-role"
+cluster_id = "franciscan-prod-eks_cluster"
+cluster_oidc_issuer_url = "https://oidc.eks.us-east-1.amazonaws.com/id/FB50479D75A63B6F0F213E58EA55D588"
+cluster_primary_security_group_id = "sg-04ce06f8dc12f7d94"
 cluster_version = "1.28"
-ec2_bastion_eip = "52.4.242.21"
-ec2_bastion_public_instance_ids = "i-0205aa56bcf7a79ef"
 nat_public_ips = tolist([
-  "44.196.132.46",
+  "54.82.251.235",
 ])
-node_group_public_arn = "arn:aws:eks:us-east-1:416696747341:nodegroup/HR-stag-eksdemo1/HR-stag-eks-ng-public/9ac72ed8-eb7f-5706-a7e0-7f18849720c7"
-node_group_public_id = "HR-stag-eksdemo1:HR-stag-eks-ng-public"
+node_group_public_arn = "arn:aws:eks:us-east-1:416696747341:nodegroup/franciscan-prod-eks_cluster/franciscan-prod-eks-ng-public/eac7377e-6907-6a1a-1065-0ecdad3b702d"
+node_group_public_id = "franciscan-prod-eks_cluster:franciscan-prod-eks-ng-public"
 node_group_public_status = "ACTIVE"
 node_group_public_version = "1.28"
 private_subnets = [
-  "subnet-0b639d1ed86f074cd",
-  "subnet-094745965c95864aa",
+  "subnet-0bcc5d92f41820336",
+  "subnet-09e938f55025e00b8",
 ]
 public_subnets = [
-  "subnet-01380f9b16ada93d5",
-  "subnet-0f3368a1c381c64ff",
+  "subnet-0c340c7ca44e4c18c",
+  "subnet-07329f2d2d61abe2a",
 ]
 vpc_cidr_block = "10.0.0.0/16"
-vpc_id = "vpc-0507a65841d680e53"
+vpc_id = "vpc-0f3677b8dfb8f3765"
