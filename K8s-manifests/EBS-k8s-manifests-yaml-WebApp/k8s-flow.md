@@ -1,5 +1,5 @@
 # k8s architecture
-![alt text](k8s-flow.png)
+![alt text](../../Images/k8s-flow.png)
 
 # AWS EKS diagram
-![alt text](aws-eks-flow.png)
+![alt text](../../Images/aws-eks-flow.png)
