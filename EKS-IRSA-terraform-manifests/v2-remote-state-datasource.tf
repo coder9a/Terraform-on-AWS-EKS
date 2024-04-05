@@ -3,7 +3,7 @@ data "terraform_remote_state" "eks" {
   backend = "s3"
   config = {
     bucket = "terraform-eks-s3-bucket"
-    key    = "terraform.tfstate"
+    key    = "dev/eks-cluster/terraform.tfstate"
     region = "us-east-1"
   }
 }
