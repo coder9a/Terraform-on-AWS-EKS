@@ -4,6 +4,8 @@ metadata:
   name: ebs-sc
 provisioner: ebs.csi.aws.com
 volumeBindingMode: WaitForFirstConsumer 
+allowVolumeExpansion: true 
+reclaimPolicy: Retain # Additional Reference: https://kubernetes.io/docs/tasks/administer-cluster/change-pv-reclaim-policy/#why-change-reclaim-policy-of-a-persistentvolume  
 
 
 # STORAGE CLASS 
