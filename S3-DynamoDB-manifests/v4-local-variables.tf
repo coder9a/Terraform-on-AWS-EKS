@@ -9,6 +9,7 @@ locals {
   "dev-ebs-storage",
   "eks-dynamodb-lock-table",
   "dev-aws-lbc",
-  "dev-aws-lbc-ingress"
+  "dev-aws-lbc-ingress",
+  "dev-aws-externaldns"
   ]
 }
