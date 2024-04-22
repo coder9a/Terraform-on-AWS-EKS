@@ -21,7 +21,7 @@ description: Learn the concept EKS IRSA - IAM Roles for Service Accounts
 ```t
   # Adding Backend as S3 for Remote State Storage
   backend "s3" {
-    bucket = "terraform-on-aws-eks"
+    bucket = "terraform-eks-s3-bucket"
     key    = "dev/eks-cluster/terraform.tfstate"
     region = "us-east-1" 
  
@@ -37,7 +37,7 @@ description: Learn the concept EKS IRSA - IAM Roles for Service Accounts
 ```t
   # Adding Backend as S3 for Remote State Storage
   backend "s3" {
-    bucket = "terraform-on-aws-eks"
+    bucket = "terraform-eks-s3-bucket"
     key    = "dev/eks-cluster/terraform.tfstate"
     region = "us-east-1" 
  
@@ -192,7 +192,7 @@ https://oidc.eks.us-east-1.amazonaws.com/id/EC973221A6C1BC248C79CFD5455EEECC/.we
 ## Step-10: Pre-requisite-1: Create folder in S3 Bucket (Optional)
 - This step is optional, Terraform can create this folder `dev/ebs-storage` during `terraform apply` but to maintain consistency we create it. 
 - Go to Services -> S3 -> 
-- **Bucket name:** terraform-on-aws-eks
+- **Bucket name:** terraform-eks-s3-bucket
 - **Create Folder**
   - **Folder Name:** dev/eks-irsa-demo
   - Click on **Create Folder**  
@@ -218,7 +218,7 @@ terraform {
   }
   # Adding Backend as S3 for Remote State Storage
   backend "s3" {
-    bucket = "terraform-on-aws-eks"
+    bucket = "terraform-eks-s3-bucket"
     key    = "dev/eks-irsa-demo/terraform.tfstate"
     region = "us-east-1" 
 
@@ -234,7 +234,7 @@ terraform {
 data "terraform_remote_state" "eks" {
   backend = "s3"
   config = {
-    bucket = "terraform-on-aws-eks"
+    bucket = "terraform-eks-s3-bucket"
     key    = "dev/eks-cluster/terraform.tfstate"
     region = var.aws_region
   }
