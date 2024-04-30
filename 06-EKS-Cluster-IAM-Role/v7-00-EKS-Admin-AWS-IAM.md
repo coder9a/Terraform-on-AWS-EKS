@@ -12,6 +12,8 @@ description: Learn how to Create new AWS Basic User to access EKS Cluster Resour
 
 ![alt text](../Images/EKS-auth-4.png)
 
+![alt text](../Images/EKS-IAM-1.png)
+
 ## Step-01: Introduction
 - We are going to manage AWS EKS aws-auth configmap using Terraform.
 
