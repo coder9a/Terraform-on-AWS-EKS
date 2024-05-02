@@ -244,8 +244,8 @@ aws configure list-profiles
 
 # Configure aws cli eksadmin1 Profile 
 aws configure --profile hr-dev-eksadmin3
-AWS Access Key ID: AKIASUF7HC7SULAF7HPV
-AWS Secret Access Key: 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
+AWS Access Key ID: 
+AWS Secret Access Key: 
 Default region: us-east-1
 Default output format: json
 
@@ -285,9 +285,9 @@ export AWS_SECRET_ACCESS_KEY=RoleSecretAccessKey
 export AWS_SESSION_TOKEN=RoleSessionToken
 
 ## SAMPLE FOR REFERENCE
-export AWS_ACCESS_KEY_ID=ASIASUF7HC7SVLASERVB
-export AWS_SECRET_ACCESS_KEY=X9jKKYGcM/hpOB4euLwiIfIF/fKlfubkwHL2mwpe
-export AWS_SESSION_TOKEN=IQoJb3JpZ2luX2VjEK///////////wEaCXVzLWVhc3QtMSJHMEUCIQCVXDXoS38cZUk2Y8+8ZBIXIDUu62UfAlwpJmx2nvuuGAIgNCHsOwd98Ft/+fBx5iDp02z3+uECMXO5XKSUCjcX7Y8qnwIIKBADGgwxODA3ODk2NDczMzMiDGt/4pCN+k6uuB0yACr8AQa8Bk4y48RL0uezeU05sRT+0Sei5qpGA8VLYeBFhbKmBk7OLNaXGZEjcpSYYJLDbvScYwjNyH/jQ+UOv8aFKfHJbdoGWPzSAYu6c8ZT2u30sO3v1sUEE8JrG8OY9QjWVXITskQKER7wdtQq4kV33cLnlmVhcWGOVahADMSZkFb54H7Rvu6ibLfDxNAAB7ELsRz9LFylrWyPuEifJ7QggJSimxzxJKBiPPzYrQxtc6YJXyKM7f0js1l3PCw+lZllWORlv4qD6ti+HC7Fd9ojTCDNZpvzWtRl0S4DsH63iAoUDYNCeIxo8EpKSPbIl33wWZr6Is7+V8q+9fPeQjDC/LCRBjqdAZPSIjZCDYuuMRTxnCd1v8bVAqdXNmG6+ala//txB5OdsNYDR+E45L3FuaHqIK9YV1xKwVYbv9bN8o8C7twMpJzsbbYyQ+exGM3RGwtJfa6+kQemrPkCUa5qrinIVYKd+895UbwPikJxC9nO/qn0tj9UU06ajnUy6dsveNjNqTHVdxG3Rt2tBmTMGakyKHBrxBlhYt/Dz0kCGBZ1nCY=
+export AWS_ACCESS_KEY_ID=
+export AWS_SECRET_ACCESS_KEY=
+export AWS_SESSION_TOKEN=
 
 # Verify current user configured in aws cli
 aws sts get-caller-identity
