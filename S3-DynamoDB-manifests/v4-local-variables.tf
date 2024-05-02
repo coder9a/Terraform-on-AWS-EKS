@@ -6,10 +6,10 @@ locals {
     # "dev/aws-lbc"
   ]
   dynamodb_tables = [
-  "dev-ebs-storage",
-  "eks-dynamodb-lock-table",
-  "dev-aws-lbc",
-  "dev-aws-lbc-ingress",
-  "dev-aws-externaldns"
+    "dev-ebs-storage",
+    "eks-dynamodb-lock-table",
+    "dev-aws-lbc",
+    "dev-aws-lbc-ingress",
+    "dev-aws-externaldns"
   ]
 }
