@@ -233,14 +233,14 @@ terraform apply -auto-approve
 
 # Configure kubeconfig for kubectl
 aws eks --region <region-code> update-kubeconfig --name <cluster_name>
-aws eks --region us-east-1 update-kubeconfig --name hr-dev-eksdemo1
+aws eks --region us-east-1 update-kubeconfig --name franciscan-prod-eksdemo1
 
 # Verify Kubernetes Worker Nodes using kubectl
 kubectl get nodes
 kubectl get nodes -o wide
 
 # Stop the Bastion Host
-Go to AWS Mgmt Console -> Services -> EC2 -> Instances -> hr-dev-Bastion-Host -> Instance State -> Stop Instance
+Go to AWS Mgmt Console -> Services -> EC2 -> Instances -> franciscan-prod-Bastion-Host -> Instance State -> Stop Instance
 ```
 
 ## Step-03: v1-versions.tf

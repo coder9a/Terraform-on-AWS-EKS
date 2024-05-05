@@ -76,14 +76,14 @@ terraform state list
 ```t
 # Configure kubeconfig for kubectl
 aws eks --region <region-code> update-kubeconfig --name <cluster_name>
-aws eks --region us-east-1 update-kubeconfig --name hr-dev-eksdemo1
+aws eks --region us-east-1 update-kubeconfig --name franciscan-prod-eksdemo1
 
 # Verify Kubernetes Worker Nodes using kubectl
 kubectl get nodes
 kubectl get nodes -o wide
 
 # Stop EC2 Bastion Host
-Go to Services -> EC2 -> Instances -> hr-dev-BastionHost -> Instance State -> Stop
+Go to Services -> EC2 -> Instances -> franciscan-prod-BastionHost -> Instance State -> Stop
 ```
 
 ## Step-06: Pre-requisite-1: Create folder in S3 Bucket (Optional)
@@ -353,7 +353,7 @@ Mainly verify the output related to HELM RELEASE named "ebs_csi_helm_metadata"
 ```t
 # Configure kubeconfig for kubectl (Optional - If already not configured)
 aws eks --region <region-code> update-kubeconfig --name <cluster_name>
-aws eks --region us-east-1 update-kubeconfig --name hr-dev-eksdemo1
+aws eks --region us-east-1 update-kubeconfig --name franciscan-prod-eksdemo1
 
 # Verify Kubernetes Worker Nodes using kubectl
 kubectl get nodes
@@ -486,10 +486,10 @@ Observation:
 kubectl -n kube-system describe sa ebs-csi-controller-sa
 Observation:
 1. Verify the "Annotations" field and you should find our IAM Role created for EBS CSI is associated with EKS Cluster EBS Service Account.
-Annotations:         eks.amazonaws.com/role-arn: arn:aws:iam::180789647333:role/hr-dev-ebs-csi-iam-role
+Annotations:         eks.amazonaws.com/role-arn: arn:aws:iam::180789647333:role/franciscan-prod-ebs-csi-iam-role
 2. Also review the labels
 Labels:              app.kubernetes.io/component=csi-driver
-                     app.kubernetes.io/instance=hr-dev-aws-ebs-csi-driver
+                     app.kubernetes.io/instance=franciscan-prod-aws-ebs-csi-driver
                      app.kubernetes.io/managed-by=Helm
                      app.kubernetes.io/name=aws-ebs-csi-driver
                      app.kubernetes.io/version=1.5.0
@@ -501,7 +501,7 @@ kubectl -n kube-system describe sa ebs-csi-node-sa
 Observation: 
 1. Observe the labels
 Labels:              app.kubernetes.io/component=csi-driver
-                     app.kubernetes.io/instance=hr-dev-aws-ebs-csi-driver
+                     app.kubernetes.io/instance=franciscan-prod-aws-ebs-csi-driver
                      app.kubernetes.io/managed-by=Helm
                      app.kubernetes.io/name=aws-ebs-csi-driver
                      app.kubernetes.io/version=1.5.0

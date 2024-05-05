@@ -140,14 +140,14 @@ terraform apply -auto-approve
 ```t
 # Configure kubeconfig for kubectl
 aws eks --region <region-code> update-kubeconfig --name <cluster_name>
-aws eks --region us-east-1 update-kubeconfig --name hr-dev-eksdemo1
+aws eks --region us-east-1 update-kubeconfig --name franciscan-prod-eksdemo1
 
 # Verify Kubernetes Worker Nodes using kubectl
 kubectl get nodes
 kubectl get nodes -o wide
 
 # Stop EC2 Bastion Host
-Go to Services -> EC2 -> Instances -> hr-dev-BastionHost -> Instance State -> Stop
+Go to Services -> EC2 -> Instances -> franciscan-prod-BastionHost -> Instance State -> Stop
 ```
 
 ## Step-10: EKS OpenID Connect Well Known Configuration URL
@@ -155,7 +155,7 @@ Go to Services -> EC2 -> Instances -> hr-dev-BastionHost -> Instance State -> St
 - **Discovery:** Defines how Clients dynamically discover information about OpenID Providers
 ```t
 # Get OpenID Connect provider URL for EKS Cluster
-Go to Services -> EKS -> hr-dev-eksdemo1 -> Configuration -> Details -> OpenID Connect provider URL
+Go to Services -> EKS -> franciscan-prod-eksdemo1 -> Configuration -> Details -> OpenID Connect provider URL
 
 # EKS OpenID Connect Well Known Configuration URL
 <EKS OpenID Connect provider URL>/.well-known/openid-configuration

@@ -191,7 +191,7 @@ output "account_id" {
   value = data.aws_caller_identity.current.account_id
 }
 
-# Sample Role Format: arn:aws:iam::180789647333:role/hr-dev-eks-nodegroup-role
+# Sample Role Format: arn:aws:iam::180789647333:role/franciscan-prod-eks-nodegroup-role
 # Locals Block
 locals {
   configmap_roles = [
@@ -274,7 +274,7 @@ terraform apply -auto-approve
 ```t
 # Configure kubeconfig for kubectl
 aws eks --region <region-code> update-kubeconfig --name <cluster_name>
-aws eks --region us-east-1 update-kubeconfig --name hr-dev-eksdemo1
+aws eks --region us-east-1 update-kubeconfig --name franciscan-prod-eksdemo1
 
 # Verify Kubernetes Worker Nodes using kubectl
 kubectl get nodes
@@ -290,17 +290,17 @@ kubectl -n kube-system get configmap aws-auth -o yaml
 
 ## Step-13: Create IAM User Login Profile and User Security Credentials
 ```t
-# Set password for hr-dev-eksreadonly1 user
-aws iam create-login-profile --user-name hr-dev-eksreadonly1 --password @EKSUser101 --no-password-reset-required
+# Set password for franciscan-prod-eksreadonly1 user
+aws iam create-login-profile --user-name franciscan-prod-eksreadonly1 --password @EKSUser101 --no-password-reset-required
 
 # Create Security Credentials for IAM User and make a note of them
-aws iam create-access-key --user-name hr-dev-eksreadonly1
+aws iam create-access-key --user-name franciscan-prod-eksreadonly1
 
 # Sample Output
-Kalyans-Mac-mini:01-ekscluster-terraform-manifests kalyanreddy$ aws iam create-access-key --user-name hr-dev-eksreadonly1
+Kalyans-Mac-mini:01-ekscluster-terraform-manifests kalyanreddy$ aws iam create-access-key --user-name franciscan-prod-eksreadonly1
 {
     "AccessKey": {
-        "UserName": "hr-dev-eksreadonly1",
+        "UserName": "franciscan-prod-eksreadonly1",
         "AccessKeyId": "AKIASUF7HC7SXRQN6CFR",
         "Status": "Active",
         "SecretAccessKey": "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",
@@ -312,7 +312,7 @@ Kalyans-Mac-mini:01-ekscluster-terraform-manifests kalyanreddy$
 ```
 
 
-## Step-14: Configure hr-dev-eksreadonly1 user AWS CLI Profile and Set it as Default Profile
+## Step-14: Configure franciscan-prod-eksreadonly1 user AWS CLI Profile and Set it as Default Profile
 ```t
 # To list all configuration data
 aws configure list
@@ -321,7 +321,7 @@ aws configure list
 aws configure list-profiles
 
 # Configure aws cli eksadmin1 Profile 
-aws configure --profile hr-dev-eksreadonly1
+aws configure --profile franciscan-prod-eksreadonly1
 AWS Access Key ID: AKIASUF7HC7SXRQN6CFR
 AWS Secret Access Key: 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
 Default region: us-east-1
@@ -332,22 +332,22 @@ aws sts get-caller-identity
 Observation: Should see the user "kalyandev" (EKS_Cluster_Create_User) from default profile
 
 # Set default profile
-export AWS_DEFAULT_PROFILE=hr-dev-eksreadonly1
+export AWS_DEFAULT_PROFILE=franciscan-prod-eksreadonly1
 
 # Get current user configured in AWS CLI
 aws sts get-caller-identity
-Observation: Should see the user "hr-dev-eksreadonly1" from hr-dev-eksreadonly1 profile, refer below sample output
+Observation: Should see the user "franciscan-prod-eksreadonly1" from franciscan-prod-eksreadonly1 profile, refer below sample output
 
 ## Sample Output
 Kalyans-Mac-mini:01-ekscluster-terraform-manifests kalyanreddy$ aws sts get-caller-identity
 {
     "UserId": "AIDASUF7HC7S4AEP4ILE2",
     "Account": "180789647333",
-    "Arn": "arn:aws:iam::180789647333:user/hr-dev-eksreadonly1"
+    "Arn": "arn:aws:iam::180789647333:user/franciscan-prod-eksreadonly1"
 }
 Kalyans-Mac-mini:01-ekscluster-terraform-manifests kalyanreddy$ 
 ```
-## Step-15: Assume IAM Role and Configure kubectl and Access Kubernetes Objects which user hr-dev-eksreadonly1 has access
+## Step-15: Assume IAM Role and Configure kubectl and Access Kubernetes Objects which user franciscan-prod-eksreadonly1 has access
 ```t
 # Export AWS Account ID
 ACCOUNT_ID=$(aws sts get-caller-identity --query "Account" --output text)
@@ -355,7 +355,7 @@ echo $ACCOUNT_ID
 
 # Assume IAM Role
 aws sts assume-role --role-arn "arn:aws:iam::<REPLACE-YOUR-ACCOUNT-ID>:role/eks-admin-role" --role-session-name eksadminsession201
-aws sts assume-role --role-arn "arn:aws:iam::$ACCOUNT_ID:role/hr-dev-eks-readonly-role" --role-session-name eksadminsession901
+aws sts assume-role --role-arn "arn:aws:iam::$ACCOUNT_ID:role/franciscan-prod-eks-readonly-role" --role-session-name eksadminsession901
 
 # GET Values and replace here
 export AWS_ACCESS_KEY_ID=RoleAccessKeyID
@@ -375,7 +375,7 @@ Kalyans-Mac-mini:01-ekscluster-terraform-manifests kalyanreddy$ aws sts get-call
 {
     "UserId": "AROASUF7HC7SRFLFPNG7F:eksadminsession901",
     "Account": "180789647333",
-    "Arn": "arn:aws:sts::180789647333:assumed-role/hr-dev-eks-readonly-role/eksadminsession901"
+    "Arn": "arn:aws:sts::180789647333:assumed-role/franciscan-prod-eks-readonly-role/eksadminsession901"
 }
 Kalyans-Mac-mini:01-ekscluster-terraform-manifests kalyanreddy$ 
 
@@ -385,10 +385,10 @@ cat $HOME/.kube/config
 
 # Configure kubeconfig for kubectl
 aws eks --region <region-code> update-kubeconfig --name <cluster_name>
-aws eks --region us-east-1 update-kubeconfig --name hr-dev-eksdemo1
+aws eks --region us-east-1 update-kubeconfig --name franciscan-prod-eksdemo1
 
 # Describe Cluster
-aws eks --region us-east-1 describe-cluster --name hr-dev-eksdemo1 --query cluster.status
+aws eks --region us-east-1 describe-cluster --name franciscan-prod-eksdemo1 --query cluster.status
 
 # Verify Kubernetes Nodes
 kubectl get nodes
@@ -405,7 +405,7 @@ kubectl get svc -n kube-system
 Observation: All the above should pass (pods, services, deployments, nodes etc). 
 ```
 
-## Step-16: Assume IAM Role and Configure kubectl and Access Kubernetes Objects which user hr-dev-eksreadonly1 don't have access
+## Step-16: Assume IAM Role and Configure kubectl and Access Kubernetes Objects which user franciscan-prod-eksreadonly1 don't have access
 ```t
 # Verify aws-auth configmap
 kubectl -n kube-system get configmap aws-auth -o yaml
@@ -461,14 +461,14 @@ unset AWS_ACCESS_KEY_ID AWS_SECRET_ACCESS_KEY AWS_SESSION_TOKEN
 
 # Verify current user configured in aws cli
 aws sts get-caller-identity
-Observation: It should switch back to current AWS_DEFAULT_PROFILE hr-dev-eksreadonly1
+Observation: It should switch back to current AWS_DEFAULT_PROFILE franciscan-prod-eksreadonly1
 
 ## Sample Output
 Kalyans-Mac-mini:01-ekscluster-terraform-manifests kalyanreddy$ aws sts get-caller-identity
 {
     "UserId": "AIDASUF7HC7S4AEP4ILE2",
     "Account": "180789647333",
-    "Arn": "arn:aws:iam::180789647333:user/hr-dev-eksreadonly1"
+    "Arn": "arn:aws:iam::180789647333:user/franciscan-prod-eksreadonly1"
 }
 Kalyans-Mac-mini:01-ekscluster-terraform-manifests kalyanreddy$ 
 
@@ -518,14 +518,14 @@ resource "kubernetes_cluster_role_v1" "eksreadonly_clusterrole" {
 }
 ```
 
-## Step-19: Test newly added Resources with hr-dev-eksreadonly1 user
+## Step-19: Test newly added Resources with franciscan-prod-eksreadonly1 user
 ```t
 # Set default profile
-export AWS_DEFAULT_PROFILE=hr-dev-eksreadonly1
+export AWS_DEFAULT_PROFILE=franciscan-prod-eksreadonly1
 
 # Get current user configured in AWS CLI
 aws sts get-caller-identity
-Observation: Should see the user "hr-dev-eksreadonly1" from hr-dev-eksreadonly1 profile, refer below sample output
+Observation: Should see the user "franciscan-prod-eksreadonly1" from franciscan-prod-eksreadonly1 profile, refer below sample output
 
 # Export AWS Account ID
 ACCOUNT_ID=$(aws sts get-caller-identity --query "Account" --output text)
@@ -533,7 +533,7 @@ echo $ACCOUNT_ID
 
 # Assume IAM Role
 aws sts assume-role --role-arn "arn:aws:iam::<REPLACE-YOUR-ACCOUNT-ID>:role/eks-admin-role" --role-session-name eksadminsession201
-aws sts assume-role --role-arn "arn:aws:iam::$ACCOUNT_ID:role/hr-dev-eks-readonly-role" --role-session-name eksadminsession501
+aws sts assume-role --role-arn "arn:aws:iam::$ACCOUNT_ID:role/franciscan-prod-eks-readonly-role" --role-session-name eksadminsession501
 
 # GET Values and replace here
 export AWS_ACCESS_KEY_ID=RoleAccessKeyID
@@ -554,7 +554,7 @@ Kalyans-Mac-mini:01-ekscluster-terraform-manifests kalyanreddy$ aws sts get-call
 {
     "UserId": "AROASUF7HC7SRFLFPNG7F:eksadminsession501",
     "Account": "180789647333",
-    "Arn": "arn:aws:sts::180789647333:assumed-role/hr-dev-eks-readonly-role/eksadminsession501"
+    "Arn": "arn:aws:sts::180789647333:assumed-role/franciscan-prod-eks-readonly-role/eksadminsession501"
 }
 Kalyans-Mac-mini:01-ekscluster-terraform-manifests kalyanreddy$ 
 
@@ -564,7 +564,7 @@ cat $HOME/.kube/config
 
 # Configure kubeconfig for kubectl
 aws eks --region <region-code> update-kubeconfig --name <cluster_name>
-aws eks --region us-east-1 update-kubeconfig --name hr-dev-eksdemo1
+aws eks --region us-east-1 update-kubeconfig --name franciscan-prod-eksdemo1
 
 # Verify Kubernetes Nodes
 kubectl get nodes
@@ -582,34 +582,34 @@ unset AWS_ACCESS_KEY_ID AWS_SECRET_ACCESS_KEY AWS_SESSION_TOKEN
 
 # Verify current user configured in aws cli
 aws sts get-caller-identity
-Observation: It should switch back to current AWS_DEFAULT_PROFILE hr-dev-eksreadonly1
+Observation: It should switch back to current AWS_DEFAULT_PROFILE franciscan-prod-eksreadonly1
 
 ## Sample Output
 Kalyans-Mac-mini:01-ekscluster-terraform-manifests kalyanreddy$ aws sts get-caller-identity
 {
     "UserId": "AIDASUF7HC7S4AEP4ILE2",
     "Account": "180789647333",
-    "Arn": "arn:aws:iam::180789647333:user/hr-dev-eksreadonly1"
+    "Arn": "arn:aws:iam::180789647333:user/franciscan-prod-eksreadonly1"
 }
 Kalyans-Mac-mini:01-ekscluster-terraform-manifests kalyanreddy$ 
 ```
 
-## Step-20: Login as hr-dev-eksreadonly1 user AWS Mgmt Console and Switch Roles
+## Step-20: Login as franciscan-prod-eksreadonly1 user AWS Mgmt Console and Switch Roles
 - Login to AWS Mgmt Console
-  - **Username:** hr-dev-eksreadonly1
+  - **Username:** franciscan-prod-eksreadonly1
   - **Password:** @EKSUser101
 - Go to EKS Servie: https://console.aws.amazon.com/eks/home?region=us-east-1#
 ```t
 # Error
 Error loading clusters
-User: arn:aws:iam::180789647333:user/hr-dev-eksadmin1 is not authorized to perform: eks:ListClusters on resource: arn:aws:eks:us-east-1:180789647333:cluster/*
+User: arn:aws:iam::180789647333:user/franciscan-prod-eksadmin1 is not authorized to perform: eks:ListClusters on resource: arn:aws:eks:us-east-1:180789647333:cluster/*
 ```  
 - Click on **Switch Role**
   - **Account:** <YOUR_AWS_ACCOUNT_ID> 
-  - **Role:** hr-dev-eks-readonly-role
+  - **Role:** franciscan-prod-eks-readonly-role
   - **Display Name:** eksreadonly-session201
   - Select Color: any color
-- Access EKS Cluster -> hr-dev-eksdemo1
+- Access EKS Cluster -> franciscan-prod-eksdemo1
   - Overview Tab
   - Workloads Tab
   - Configuration Tab  
@@ -638,11 +638,11 @@ rm -rf .terraform*
 ```t
 # Clean-up AWS Credentials File
 vi /Users/kalyanreddy/.aws/credentials
-Remove hr-dev-eksreadonly1 creds
+Remove franciscan-prod-eksreadonly1 creds
 
 # Clean-Up AWS Config File
 vi /Users/kalyanreddy/.aws/config 
-Remove hr-dev-eksreadonly1 profiles
+Remove franciscan-prod-eksreadonly1 profiles
 
 # List Profiles - AWS CLI
 aws configure list-profiles
