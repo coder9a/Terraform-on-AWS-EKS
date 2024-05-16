@@ -246,7 +246,7 @@ resource "kubernetes_role_binding_v1" "eksdeveloper_rolebinding" {
 - **File:** c7-02-kubernetes-configmap.tf
 ```t
 
-# Sample Role Format: arn:aws:iam::180789647333:role/hr-dev-eks-nodegroup-role
+# Sample Role Format: arn:aws:iam::180789647333:role/franciscan-prod-eks-nodegroup-role
 # Locals Block
 locals {
   configmap_roles = [
@@ -339,11 +339,11 @@ terraform apply -auto-approve
 ## Step-15: Verify aws-auth ConfigMap after EKS Cluster Creation
 ```t
 # Stop Bastion Host
-Login to AWS Mgmt Console -> EC2 -> hr-dev-Bastion-Host -> Instance State -> Stop 
+Login to AWS Mgmt Console -> EC2 -> franciscan-prod-Bastion-Host -> Instance State -> Stop 
 
 # Configure kubeconfig for kubectl
 aws eks --region <region-code> update-kubeconfig --name <cluster_name>
-aws eks --region us-east-1 update-kubeconfig --name hr-dev-eksdemo1
+aws eks --region us-east-1 update-kubeconfig --name franciscan-prod-eksdemo1
 
 # Verify Kubernetes Worker Nodes using kubectl
 kubectl get nodes
@@ -359,17 +359,17 @@ kubectl -n kube-system get configmap aws-auth -o yaml
 
 ## Step-16: Create IAM User Login Profile and User Security Credentials
 ```t
-# Set password for hr-dev-eksdeveloper1 user
-aws iam create-login-profile --user-name hr-dev-eksdeveloper1 --password @EKSUser101 --no-password-reset-required
+# Set password for franciscan-prod-eksdeveloper1 user
+aws iam create-login-profile --user-name franciscan-prod-eksdeveloper1 --password @EKSUser101 --no-password-reset-required
 
 # Create Security Credentials for IAM User and make a note of them
-aws iam create-access-key --user-name hr-dev-eksdeveloper1
+aws iam create-access-key --user-name franciscan-prod-eksdeveloper1
 
 # Sample Output
-Kalyans-Mac-mini:01-ekscluster-terraform-manifests kalyanreddy$ aws iam create-access-key --user-name hr-dev-eksdeveloper1
+Kalyans-Mac-mini:01-ekscluster-terraform-manifests kalyanreddy$ aws iam create-access-key --user-name franciscan-prod-eksdeveloper1
 {
     "AccessKey": {
-        "UserName": "hr-dev-eksdeveloper1",
+        "UserName": "franciscan-prod-eksdeveloper1",
         "AccessKeyId": "AKIASUF7HC7SYIH37PVL",
         "Status": "Active",
         "SecretAccessKey": "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",
@@ -379,7 +379,7 @@ Kalyans-Mac-mini:01-ekscluster-terraform-manifests kalyanreddy$ aws iam create-a
 Kalyans-Mac-mini:01-ekscluster-terraform-manifests kalyanreddy$ 
 ```
 
-## Step-17: Configure hr-dev-eksdeveloper1 user AWS CLI Profile and Set it as Default Profile
+## Step-17: Configure franciscan-prod-eksdeveloper1 user AWS CLI Profile and Set it as Default Profile
 ```t
 # To list all configuration data
 aws configure list
@@ -388,7 +388,8 @@ aws configure list
 aws configure list-profiles
 
 # Configure aws cli eksadmin1 Profile 
-aws configure --profile hr-dev-eksdeveloper1
+aws configure --profile franciscan-prod-eksdeveloper1
+
 AWS Access Key ID: AKIASUF7HC7SXRQN6CFR
 AWS Secret Access Key: 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
 Default region: us-east-1
@@ -399,22 +400,22 @@ aws sts get-caller-identity
 Observation: Should see the user "kalyandev" (EKS_Cluster_Create_User) from default profile
 
 # Set default profile
-export AWS_DEFAULT_PROFILE=hr-dev-eksdeveloper1
+export AWS_DEFAULT_PROFILE=franciscan-prod-eksdeveloper1
 
 # Get current user configured in AWS CLI
 aws sts get-caller-identity
-Observation: Should see the user "hr-dev-eksdeveloper1" from hr-dev-eksdeveloper1 profile, refer below sample output
+Observation: Should see the user "franciscan-prod-eksdeveloper1" from franciscan-prod-eksdeveloper1 profile, refer below sample output
 
 ## Sample Output
 Kalyans-Mac-mini:01-ekscluster-terraform-manifests kalyanreddy$ aws sts get-caller-identity
 {
     "UserId": "AIDASUF7HC7SXXKAVQ5R5",
     "Account": "180789647333",
-    "Arn": "arn:aws:iam::180789647333:user/hr-dev-eksdeveloper1"
+    "Arn": "arn:aws:iam::180789647333:user/franciscan-prod-eksdeveloper1"
 }
 Kalyans-Mac-mini:01-ekscluster-terraform-manifests kalyanreddy$ 
 ```
-## Step-18: Assume IAM Role and Configure kubectl and Access Kubernetes Objects which user hr-dev-eksdeveloper1 has access
+## Step-18: Assume IAM Role and Configure kubectl and Access Kubernetes Objects which user franciscan-prod-eksdeveloper1 has access
 ```t
 # Export AWS Account ID
 ACCOUNT_ID=$(aws sts get-caller-identity --query "Account" --output text)
@@ -422,7 +423,7 @@ echo $ACCOUNT_ID
 
 # Assume IAM Role
 aws sts assume-role --role-arn "arn:aws:iam::<REPLACE-YOUR-ACCOUNT-ID>:role/<REPLACE-YOUR-ROLE-NAME>" --role-session-name eksadminsession201
-aws sts assume-role --role-arn "arn:aws:iam::$ACCOUNT_ID:role/hr-dev-eks-developer-role" --role-session-name eksdevsession101
+aws sts assume-role --role-arn "arn:aws:iam::$ACCOUNT_ID:role/franciscan-prod-eks-developer-role" --role-session-name eksdevsession101
 
 # GET Values and replace here
 export AWS_ACCESS_KEY_ID=RoleAccessKeyID
@@ -442,7 +443,7 @@ Kalyans-Mac-mini:01-ekscluster-terraform-manifests kalyanreddy$ aws sts get-call
 {
     "UserId": "AROASUF7HC7SSJZFJQPPD:eksdevsession101",
     "Account": "180789647333",
-    "Arn": "arn:aws:sts::180789647333:assumed-role/hr-dev-eks-developer-role/eksdevsession101"
+    "Arn": "arn:aws:sts::180789647333:assumed-role/franciscan-prod-eks-developer-role/eksdevsession101"
 }
 Kalyans-Mac-mini:01-ekscluster-terraform-manifests kalyanreddy$ 
 
@@ -453,10 +454,10 @@ cat $HOME/.kube/config
 
 # Configure kubeconfig for kubectl
 aws eks --region <region-code> update-kubeconfig --name <cluster_name>
-aws eks --region us-east-1 update-kubeconfig --name hr-dev-eksdemo1
+aws eks --region us-east-1 update-kubeconfig --name franciscan-prod-eksdemo1
 
 # Describe Cluster
-aws eks --region us-east-1 describe-cluster --name hr-dev-eksdemo1 --query cluster.status
+aws eks --region us-east-1 describe-cluster --name franciscan-prod-eksdemo1 --query cluster.status
 
 # Verify Kubernetes Nodes
 kubectl get nodes
@@ -473,7 +474,7 @@ kubectl get svc -n kube-system
 Observation: All the above should pass (pods, services, deployments, nodes etc). 
 ```
 
-## Step-19: Assume IAM Role and Configure kubectl and Access Kubernetes Objects which user hr-dev-eksdeveloper1 don't have access
+## Step-19: Assume IAM Role and Configure kubectl and Access Kubernetes Objects which user franciscan-prod-eksdeveloper1 don't have access
 ```t
 # Verify aws-auth configmap
 kubectl -n kube-system get configmap aws-auth -o yaml
@@ -508,7 +509,7 @@ cd 25-EKS-DeveloperAccess-IAM-Users/03-app1-kube-manifests
 4. 04-NLB-LoadBalancer-Service.yaml
 ```
 
-## Step-21: Deploy Sample App to Dev Namespace using IAM User hr-dev-eksdeveloper1
+## Step-21: Deploy Sample App to Dev Namespace using IAM User franciscan-prod-eksdeveloper1
 - Sample App manifests are created using `YAML` and we can deploy them using `kubectl`
 ```t
 # Change Directory 
@@ -522,18 +523,18 @@ Kalyans-Mac-mini:25-EKS-DeveloperAccess-IAM-Users kalyanreddy$ aws sts get-calle
 {
     "UserId": "AROASUF7HC7SSJZFJQPPD:eksdevsession101",
     "Account": "180789647333",
-    "Arn": "arn:aws:sts::180789647333:assumed-role/hr-dev-eks-developer-role/eksdevsession101"
+    "Arn": "arn:aws:sts::180789647333:assumed-role/franciscan-prod-eks-developer-role/eksdevsession101"
 }
 Kalyans-Mac-mini:25-EKS-DeveloperAccess-IAM-Users kalyanreddy$ 
 
 
-# Deploy kube-manifests (YAML Format) to Dev Namespace using hr-dev-eksdeveloper1 user
+# Deploy kube-manifests (YAML Format) to Dev Namespace using franciscan-prod-eksdeveloper1 user
 kubectl apply -f 03-app1-kube-manifests/
 Observation: 
-1. hr-dev-eksdeveloper1 has full access to Dev Namespace as per Role and RoleBinding we have defined in v08-05-k8s-role-rolebinding.tf
+1. franciscan-prod-eksdeveloper1 has full access to Dev Namespace as per Role and RoleBinding we have defined in v08-05-k8s-role-rolebinding.tf
 2. We should see a successful creation of Kubernetes Deployment and Services
 
-# Verify Dev Namespace resources using hr-dev-eksdeveloper1 user
+# Verify Dev Namespace resources using franciscan-prod-eksdeveloper1 user
 kubectl get deploy -n dev
 kubectl get pods -n dev
 kubectl get svc -n dev
@@ -562,7 +563,7 @@ cd 25-EKS-DeveloperAccess-IAM-Users/04-k8sresources-terraform-manifests
 7. c7-kubernetes-loadbalancer-service-nlb.tf
 ```
 
-## Step-23: Deploy Sample App to Dev Namespace using IAM User hr-dev-eksdeveloper1 - Terraform Manifests
+## Step-23: Deploy Sample App to Dev Namespace using IAM User franciscan-prod-eksdeveloper1 - Terraform Manifests
 - Sample App manifests are created using `TERRAFORM LANGUAGE` and we can deploy them using `Terraform Commands`
 ```t
 # Verify User
@@ -573,14 +574,14 @@ Kalyans-Mac-mini:25-EKS-DeveloperAccess-IAM-Users kalyanreddy$ aws sts get-calle
 {
     "UserId": "AROASUF7HC7SSJZFJQPPD:eksdevsession101",
     "Account": "180789647333",
-    "Arn": "arn:aws:sts::180789647333:assumed-role/hr-dev-eks-developer-role/eksdevsession101"
+    "Arn": "arn:aws:sts::180789647333:assumed-role/franciscan-prod-eks-developer-role/eksdevsession101"
 }
 Kalyans-Mac-mini:25-EKS-DeveloperAccess-IAM-Users kalyanreddy$ 
 
 # Change Directory 
 cd 25-EKS-DeveloperAccess-IAM-Users/04-k8sresources-terraform-manifests
 
-# Deploy Terraform Manifests of Sample App to Dev Namespace using hr-dev-eksdeveloper1 user
+# Deploy Terraform Manifests of Sample App to Dev Namespace using franciscan-prod-eksdeveloper1 user
 terraform init
 
 ## ERROR
@@ -595,9 +596,9 @@ Error refreshing state: AccessDenied: Access Denied
 Kalyans-Mac-mini:04-k8sresources-terraform-manifests kalyanreddy$ 
 ```
 
-## Step-24: Provide S3 and DynamoDB Full Access to hr-dev-eks-developer-role
-- We need to provide S3 and DynamoDB Access to role `hr-dev-eks-developer-role` to deploy Apps to Dev Namespace using user `hr-dev-eksdeveloper1` provided if we are using `Remote State Datasource` as S3 Bucket and for `State Locking` if we are uing DynamoDB
-- In AWS Mgmt Console, go to Services -> IAM -> Roles -> hr-dev-eks-developer-role
+## Step-24: Provide S3 and DynamoDB Full Access to franciscan-prod-eks-developer-role
+- We need to provide S3 and DynamoDB Access to role `franciscan-prod-eks-developer-role` to deploy Apps to Dev Namespace using user `franciscan-prod-eksdeveloper1` provided if we are using `Remote State Datasource` as S3 Bucket and for `State Locking` if we are uing DynamoDB
+- In AWS Mgmt Console, go to Services -> IAM -> Roles -> franciscan-prod-eks-developer-role
 - Add below two policies
   - AmazonS3FullAccess
   - AmazonDynamoDBFullAccess
@@ -624,14 +625,14 @@ unset AWS_ACCESS_KEY_ID AWS_SECRET_ACCESS_KEY AWS_SESSION_TOKEN
 
 # Verify current user configured in aws cli
 aws sts get-caller-identity
-Observation: It should switch back to current AWS_DEFAULT_PROFILE hr-dev-eksdeveloper1
+Observation: It should switch back to current AWS_DEFAULT_PROFILE franciscan-prod-eksdeveloper1
 
 ## Sample Output
 Kalyans-Mac-mini:01-ekscluster-terraform-manifests kalyanreddy$ aws sts get-caller-identity
 {
     "UserId": "AIDASUF7HC7S4AEP4ILE2",
     "Account": "180789647333",
-    "Arn": "arn:aws:iam::180789647333:user/hr-dev-eksdeveloper1"
+    "Arn": "arn:aws:iam::180789647333:user/franciscan-prod-eksdeveloper1"
 }
 Kalyans-Mac-mini:01-ekscluster-terraform-manifests kalyanreddy$ 
 
@@ -653,7 +654,7 @@ Kalyans-Mac-mini:01-ekscluster-terraform-manifests kalyanreddy$
 
 ```
 
-## Step-26: Apply Changes for hr-dev-eks-developer-role
+## Step-26: Apply Changes for franciscan-prod-eks-developer-role
 ```t
 # Change Directory 
 25-EKS-DeveloperAccess-IAM-Users/01-ekscluster-terraform-manifests
@@ -664,7 +665,7 @@ terraform apply -auto-approve
 ```
 
 
-## Step-27: Deploy Sample App to Dev Namespace using IAM User hr-dev-eksdeveloper1 - Terraform Manifests - After fixing S3 and DynamoDB Access
+## Step-27: Deploy Sample App to Dev Namespace using IAM User franciscan-prod-eksdeveloper1 - Terraform Manifests - After fixing S3 and DynamoDB Access
 - We need to again set our AWS CLI profile to STS Assume Role Session
 ```t
 # Get current user configured in AWS CLI
@@ -672,11 +673,11 @@ aws sts get-caller-identity
 Observation: Should see the user "kalyandev" (EKS_Cluster_Create_User) from default profile
 
 # Set default profile
-export AWS_DEFAULT_PROFILE=hr-dev-eksdeveloper1
+export AWS_DEFAULT_PROFILE=franciscan-prod-eksdeveloper1
 
 # Get current user configured in AWS CLI
 aws sts get-caller-identity
-Observation: Should see the user "hr-dev-eksdeveloper1" from hr-dev-eksdeveloper1 profile, refer below sample output
+Observation: Should see the user "franciscan-prod-eksdeveloper1" from franciscan-prod-eksdeveloper1 profile, refer below sample output
 
 # Export AWS Account ID
 ACCOUNT_ID=$(aws sts get-caller-identity --query "Account" --output text)
@@ -684,7 +685,7 @@ echo $ACCOUNT_ID
 
 # Assume IAM Role
 aws sts assume-role --role-arn "arn:aws:iam::<REPLACE-YOUR-ACCOUNT-ID>:role/<REPLACE-YOUR-ROLE-NAME>" --role-session-name eksadminsession201
-aws sts assume-role --role-arn "arn:aws:iam::$ACCOUNT_ID:role/hr-dev-eks-developer-role" --role-session-name eksdevsession103
+aws sts assume-role --role-arn "arn:aws:iam::$ACCOUNT_ID:role/franciscan-prod-eks-developer-role" --role-session-name eksdevsession103
 
 # GET Values and replace here
 export AWS_ACCESS_KEY_ID=RoleAccessKeyID
@@ -704,7 +705,7 @@ Kalyans-Mac-mini:01-ekscluster-terraform-manifests kalyanreddy$ aws sts get-call
 {
     "UserId": "AROASUF7HC7SSJZFJQPPD:eksdevsession103",
     "Account": "180789647333",
-    "Arn": "arn:aws:sts::180789647333:assumed-role/hr-dev-eks-developer-role/eksdevsession103"
+    "Arn": "arn:aws:sts::180789647333:assumed-role/franciscan-prod-eks-developer-role/eksdevsession103"
 }
 Kalyans-Mac-mini:01-ekscluster-terraform-manifests kalyanreddy$ 
 
@@ -715,7 +716,7 @@ cat $HOME/.kube/config
 
 # Configure kubeconfig for kubectl
 aws eks --region <region-code> update-kubeconfig --name <cluster_name>
-aws eks --region us-east-1 update-kubeconfig --name hr-dev-eksdemo1
+aws eks --region us-east-1 update-kubeconfig --name franciscan-prod-eksdemo1
 
 # Verify Kubernetes Nodes
 kubectl get nodes
@@ -723,13 +724,13 @@ kubectl get nodes
 # Change Directory 
 cd 25-EKS-DeveloperAccess-IAM-Users/04-k8sresources-terraform-manifests
 
-# Deploy Terraform Manifests of Sample App to Dev Namespace using hr-dev-eksdeveloper1 user
+# Deploy Terraform Manifests of Sample App to Dev Namespace using franciscan-prod-eksdeveloper1 user
 terraform init
 terraform validate
 terraform plan
 terraform apply -auto-approve
 
-# Verify Dev Namespace resources using hr-dev-eksdeveloper1 user
+# Verify Dev Namespace resources using franciscan-prod-eksdeveloper1 user
 kubectl get deploy -n dev
 kubectl get pods -n dev
 kubectl get svc -n dev
@@ -752,14 +753,14 @@ unset AWS_ACCESS_KEY_ID AWS_SECRET_ACCESS_KEY AWS_SESSION_TOKEN
 
 # Verify current user configured in aws cli
 aws sts get-caller-identity
-Observation: It should switch back to current AWS_DEFAULT_PROFILE hr-dev-eksdeveloper1
+Observation: It should switch back to current AWS_DEFAULT_PROFILE franciscan-prod-eksdeveloper1
 
 ## Sample Output
 Kalyans-Mac-mini:01-ekscluster-terraform-manifests kalyanreddy$ aws sts get-caller-identity
 {
     "UserId": "AIDASUF7HC7S4AEP4ILE2",
     "Account": "180789647333",
-    "Arn": "arn:aws:iam::180789647333:user/hr-dev-eksdeveloper1"
+    "Arn": "arn:aws:iam::180789647333:user/franciscan-prod-eksdeveloper1"
 }
 Kalyans-Mac-mini:01-ekscluster-terraform-manifests kalyanreddy$ 
 
@@ -781,22 +782,22 @@ Kalyans-Mac-mini:01-ekscluster-terraform-manifests kalyanreddy$
 ```
 
 
-## Step-29: Login as hr-dev-eksdeveloper1 user AWS Mgmt Console and Switch Roles
+## Step-29: Login as franciscan-prod-eksdeveloper1 user AWS Mgmt Console and Switch Roles
 - Login to AWS Mgmt Console
-  - **Username:** hr-dev-eksdeveloper1
+  - **Username:** franciscan-prod-eksdeveloper1
   - **Password:** @EKSUser101
 - Go to EKS Servie: https://console.aws.amazon.com/eks/home?region=us-east-1#
 ```t
 # Error
 Error loading clusters
-User: arn:aws:iam::180789647333:user/hr-dev-eksadmin1 is not authorized to perform: eks:ListClusters on resource: arn:aws:eks:us-east-1:180789647333:cluster/*
+User: arn:aws:iam::180789647333:user/franciscan-prod-eksadmin1 is not authorized to perform: eks:ListClusters on resource: arn:aws:eks:us-east-1:180789647333:cluster/*
 ```  
 - Click on **Switch Role**
   - **Account:** <YOUR_AWS_ACCOUNT_ID> 
-  - **Role:** hr-dev-eks-developer-role
+  - **Role:** franciscan-prod-eks-developer-role
   - **Display Name:** eksdeveloper-session201
   - Select Color: any color
-- Access EKS Cluster -> hr-dev-eksdemo1
+- Access EKS Cluster -> franciscan-prod-eksdemo1
   - Overview Tab
   - Workloads Tab
   - Configuration Tab  
@@ -825,11 +826,11 @@ rm -rf .terraform*
 ```t
 # Clean-up AWS Credentials File
 vi /Users/kalyanreddy/.aws/credentials
-Remove hr-dev-eksdeveloper1 creds
+Remove franciscan-prod-eksdeveloper1 creds
 
 # Clean-Up AWS Config File
 vi /Users/kalyanreddy/.aws/config 
-Remove hr-dev-eksdeveloper1 profiles
+Remove franciscan-prod-eksdeveloper1 profiles
 
 # List Profiles - AWS CLI
 aws configure list-profiles
