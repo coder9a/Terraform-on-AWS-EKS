@@ -10,6 +10,7 @@ locals {
     "eks-dynamodb-lock-table",
     "dev-aws-lbc",
     "dev-aws-lbc-ingress",
-    "dev-aws-externaldns"
+    "dev-aws-externaldns",
+    "dev-app1-k8s"
   ]
 }
