@@ -11,6 +11,7 @@ locals {
     "dev-aws-lbc",
     "dev-aws-lbc-ingress",
     "dev-aws-externaldns",
-    "dev-app1-k8s"
+    "dev-app1-k8s",
+    "dev-eks-lbc"
   ]
 }
