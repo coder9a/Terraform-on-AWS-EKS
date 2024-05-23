@@ -189,7 +189,7 @@ User: franciscan-prod-eksadmin1
 - Login and access EKS Service using AWS Mgmt Console
   - **Username:** franciscan-prod-eksadmin1
   - **Password:** @EKSUser101
-- Go to  Services -> Elastic Kubernetes Service -> franciscan-prod-eksdemo1
+- Go to  Services -> Elastic Kubernetes Service -> franciscan-prod-eks-cluster --alias franciscan-prod-eks-cluster
   - Overview Tab
   - Workloads Tab
   - Configuration Tab
@@ -222,7 +222,7 @@ cat $HOME/.kube/config
 
 # Configure kubeconfig for kubectl with AWS CLI Profile franciscan-prod-eksadmin1
 aws eks --region <region-code> update-kubeconfig --name <cluster_name> --profile <AWS-CLI-PROFILE-NAME>
-aws eks --region us-east-1 update-kubeconfig --name franciscan-prod-eksdemo1 --profile franciscan-prod-eksadmin1
+aws eks --region us-east-1 update-kubeconfig --name franciscan-prod-eks-cluster --alias franciscan-prod-eks-cluster --profile franciscan-prod-eksadmin1
 Observation:
 1. It should pass
 
@@ -268,7 +268,7 @@ User: franciscan-prod-eksadmin1
 - Login and access EKS Service using AWS Mgmt Console
   - **Username:** franciscan-prod-eksadmin2
   - **Password:** @EKSUser101
-- Go to  Services -> Elastic Kubernetes Service -> franciscan-prod-eksdemo1
+- Go to  Services -> Elastic Kubernetes Service -> franciscan-prod-eks-cluster --alias franciscan-prod-eks-cluster
   - Overview Tab
   - Workloads Tab
   - Configuration Tab
@@ -300,7 +300,7 @@ cat $HOME/.kube/config
 
 # Configure kubeconfig for kubectl with AWS CLI Profile franciscan-prod-eksadmin1
 aws eks --region <region-code> update-kubeconfig --name <cluster_name> --profile <AWS-CLI-PROFILE-NAME>
-aws eks --region us-east-1 update-kubeconfig --name franciscan-prod-eksdemo1 --profile franciscan-prod-eksadmin2
+aws eks --region us-east-1 update-kubeconfig --name franciscan-prod-eks-cluster --alias franciscan-prod-eks-cluster --profile franciscan-prod-eksadmin2
 Observation:
 1. It should pass
 

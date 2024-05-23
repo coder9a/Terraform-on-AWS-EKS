@@ -76,7 +76,7 @@ terraform state list
 ```t
 # Configure kubeconfig for kubectl
 aws eks --region <region-code> update-kubeconfig --name <cluster_name>
-aws eks --region us-east-1 update-kubeconfig --name franciscan-prod-eksdemo1
+aws eks --region us-east-1 update-kubeconfig --name franciscan-prod-eks-cluster --alias franciscan-prod-eks-cluster
 
 # Verify Kubernetes Worker Nodes using kubectl
 kubectl get nodes
@@ -353,7 +353,7 @@ Mainly verify the output related to HELM RELEASE named "ebs_csi_helm_metadata"
 ```t
 # Configure kubeconfig for kubectl (Optional - If already not configured)
 aws eks --region <region-code> update-kubeconfig --name <cluster_name>
-aws eks --region us-east-1 update-kubeconfig --name franciscan-prod-eksdemo1
+aws eks --region us-east-1 update-kubeconfig --name franciscan-prod-eks-cluster --alias franciscan-prod-eks-cluster
 
 # Verify Kubernetes Worker Nodes using kubectl
 kubectl get nodes

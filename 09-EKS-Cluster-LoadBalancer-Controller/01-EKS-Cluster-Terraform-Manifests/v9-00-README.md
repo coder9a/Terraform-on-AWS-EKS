@@ -197,7 +197,7 @@ terraform apply -auto-approve
 ```t
 # Configure kubeconfig for kubectl
 aws eks --region <region-code> update-kubeconfig --name <cluster_name>
-aws eks --region us-east-1 update-kubeconfig --name franciscan-prod-eksdemo1
+aws eks --region us-east-1 update-kubeconfig --name franciscan-prod-eks-cluster --alias franciscan-prod-eks-cluster
 
 # Verify Kubernetes Worker Nodes using kubectl
 kubectl get nodes
@@ -307,10 +307,10 @@ cat $HOME/.kube/config
 
 # Configure kubeconfig for kubectl
 aws eks --region <region-code> update-kubeconfig --name <cluster_name>
-aws eks --region us-east-1 update-kubeconfig --name franciscan-prod-eksdemo1
+aws eks --region us-east-1 update-kubeconfig --name franciscan-prod-eks-cluster --alias franciscan-prod-eks-cluster
 
 # Describe Cluster
-aws eks --region us-east-1 describe-cluster --name franciscan-prod-eksdemo1 --query cluster.status
+aws eks --region us-east-1 describe-cluster --name franciscan-prod-eks-cluster --alias franciscan-prod-eks-cluster --query cluster.status
 
 # List Kubernetes Nodes
 kubectl get nodes
@@ -351,7 +351,7 @@ User: arn:aws:iam::180789647333:user/franciscan-prod-eksadmin1 is not authorized
   - **Role:** franciscan-prod-eks-admin-role
   - **Display Name:** eksadmin-session201
   - Select Color: any color
-- Access EKS Cluster -> franciscan-prod-eksdemo1
+- Access EKS Cluster -> franciscan-prod-eks-cluster --alias franciscan-prod-eks-cluster
   - Overview Tab
   - Workloads Tab
   - Configuration Tab  

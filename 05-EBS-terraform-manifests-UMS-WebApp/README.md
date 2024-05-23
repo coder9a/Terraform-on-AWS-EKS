@@ -35,7 +35,7 @@ terraform apply -auto-approve
 
 # Configure kubeconfig for kubectl
 aws eks --region <region-code> update-kubeconfig --name <cluster_name>
-aws eks --region us-east-1 update-kubeconfig --name franciscan-prod-eksdemo1
+aws eks --region us-east-1 update-kubeconfig --name franciscan-prod-eks-cluster --alias franciscan-prod-eks-cluster
 
 # Verify Kubernetes Worker Nodes using kubectl
 kubectl get nodes
@@ -59,7 +59,7 @@ terraform apply -auto-approve
 
 # Configure kubeconfig for kubectl
 aws eks --region <region-code> update-kubeconfig --name <cluster_name>
-aws eks --region us-east-1 update-kubeconfig --name franciscan-prod-eksdemo1
+aws eks --region us-east-1 update-kubeconfig --name franciscan-prod-eks-cluster --alias franciscan-prod-eks-cluster
 
 # Verify EBS CSI Controller and Node pods running in kube-system namespace
 kubectl -n kube-system get pods
