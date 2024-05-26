@@ -19,7 +19,7 @@ resource "helm_release" "loadbalancer_controller" {
 
   set {
     name  = "serviceAccount.create"
-    value = "false"
+    value = "true"
   }
 
   set {
