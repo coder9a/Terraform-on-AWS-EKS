@@ -17,7 +17,7 @@ metadata:
     alb.ingress.kubernetes.io/unhealthy-threshold-count: '5'
     alb.ingress.kubernetes.io/success-codes: '200'
 spec:
-  ingressClassName: ingres-class # Ingress Class
+  ingressClassName: my-aws-ingress-class # Ingress Class
   defaultBackend:
     service:
       name: app3-nginx-nodeport-service
