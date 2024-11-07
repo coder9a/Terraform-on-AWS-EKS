@@ -1,26 +1,25 @@
 ---
-title: AWS EKS Ingress Target Type IP Automate with Terraform
-description: Learn AWS EKS Ingress Target Type IP and Automate it with Terraform
+title: AWS EKS Ingress Internal LB with Terraform
+description: Learn AWS EKS Ingress Internal LB with Terraform
 ---
 
 ## Step-01: Introduction
-- `alb.ingress.kubernetes.io/target-type` specifies how to route traffic to pods. 
-- You can choose between `instance` and `ip`
-- **Instance Mode:** `instance mode` will route traffic to all ec2 instances within cluster on NodePort opened for your service.
-- **IP Mode:** `ip mode` is required for sticky sessions to work with Application Load Balancers.
+- Create Internal Application Load Balancer using Ingress
+- To test the Internal LB, use the `curl-pod`
+- Deploy `curl-pod`
+- Connect to `curl-pod` and test Internal LB from `curl-pod`
 
-
-## Step-02: Ingress Manifest - Add target-type
-- **File Name:** 04-ALB-Ingress-target-type-ip.yml
+## Step-02: Update Ingress Scheme annotation to Internal
+- **File Name:** `04-kube-manifests-ingress-InternalLB/04-ALB-Ingress-Internal-LB.yml`
 ```yaml
-    # Target Type: IP
-    alb.ingress.kubernetes.io/target-type: ip   
+    # Creates Internal Application Load Balancer
+    alb.ingress.kubernetes.io/scheme: internal 
 ```
 
 ## Step-03: Deploy all Application Kubernetes Manifests and Verify
 ```t
 # Deploy kube-manifests
-kubectl apply -f 04-kube-manifests-ingress-TargetType-IP
+kubectl apply -f 04-kube-manifests-ingress-InternalLB/
 
 # Verify Ingress Resource
 kubectl get ingress
@@ -37,57 +36,62 @@ kubectl get svc
 - Load Balancer - Rules (Verify both 80 & 443 listeners) 
 - Target Groups - Group Details (Verify Health check path)
 - Target Groups - Targets (Verify all 3 targets are healthy)
-- **PRIMARILY VERIFY - TARGET GROUPS which contain thePOD IPs instead of WORKER NODE IP with NODE PORTS**
-```t
-# List Pods and their IPs
-kubectl get pods -o wide
+
+## Step-04: How to test this Internal Load Balancer? 
+- We are going to deploy a `curl-pod` in EKS Cluster
+- We connect to that `curl-pod` in EKS Cluster and test using `curl commands` for our sample applications load balanced using this Internal Application Load Balancer
+
+
+## Step-05: curl-pod Kubernetes Manifest
+- **File Name:** `05-kube-manifests-curl/01-curl-pod.yml`
+```yaml
+apiVersion: v1
+kind: Pod
+metadata:
+  name: curl-pod
+spec:
+  containers:
+  - name: curl
+    image: curlimages/curl 
+    command: [ "sleep", "600" ]
 ```
 
-### Verify External DNS Log
+## Step-06: Deploy curl-pod and Verify Internal LB
 ```t
-# Verify External DNS logs
-kubectl logs -f $(kubectl get po | egrep -o 'external-dns[A-Za-z0-9-]+')
-```
-### Verify Route53
-- Go to Services -> Route53
-- You should see **Record Sets** added for 
-  - target-type-ip-501.stacksimplify.com 
+# Deploy curl-pod
+kubectl apply -f 05-kube-manifests-curl/
 
+# Will open up a terminal session into the container
+kubectl exec -it curl-pod -- sh
 
-## Step-04: Access Application using newly registered DNS Name
-### Perform nslookup tests before accessing Application
-- Test if our new DNS entries registered and resolving to an IP Address
-```t
-# nslookup commands
-nslookup target-type-ip-501.stacksimplify.com 
-```
-### Access Application using DNS domain
-```t
-# Access App1
-http://target-type-ip-501.stacksimplify.com /app1/index.html
+# We can now curl external addresses or internal services:
+curl http://google.com/
+curl <INTERNAL-INGRESS-LB-DNS>
 
-# Access App2
-http://target-type-ip-501.stacksimplify.com /app2/index.html
+# Default Backend Curl Test
+curl internal-ingress-internal-lb-1839544354.us-east-1.elb.amazonaws.com
 
-# Access Default App (App3)
-http://target-type-ip-501.stacksimplify.com 
+# App1 Curl Test
+curl internal-ingress-internal-lb-1839544354.us-east-1.elb.amazonaws.com/app1/index.html
+
+# App2 Curl Test
+curl internal-ingress-internal-lb-1839544354.us-east-1.elb.amazonaws.com/app2/index.html
+
+# App3 Curl Test
+curl internal-ingress-internal-lb-1839544354.us-east-1.elb.amazonaws.com
 ```
 
-## Step-05: Clean Up
+
+## Step-07: Clean Up
 ```t
 # Delete Manifests
-kubectl delete -f 04-kube-manifests-ingress-TargetType-IP
-
-## Verify Route53 Record Set to ensure our DNS records got deleted
-- Go to Route53 -> Hosted Zones -> Records 
-- The below records should be deleted automatically
-  - target-type-ip-501.stacksimplify.com 
+kubectl delete -f 04-kube-manifests-ingress-InternalLB
+kubectl delete -f 05-kube-manifests-curl/
 ```
 
 
-
-## Step-06: Review Terraform Manifests 
-- **Project Folder:** 05-ingress-groups-terraform-manifests
+## Step-08: Review Terraform Manifests 
+- **Project Folder:** 06-ingress-InternalLB-terraform-manifests
 1. v1-versions.tf
 2. v2-remote-state-datasource.tf
 3. v3-providers.tf
@@ -97,21 +101,29 @@ kubectl delete -f 04-kube-manifests-ingress-TargetType-IP
 7. v7-kubernetes-app1-nodeport-service.tf
 8. v8-kubernetes-app2-nodeport-service.tf
 9. v9-kubernetes-app3-nodeport-service.tf
-10. v11-acm-certificate.tf
 
 
-## Step-07: v10-kubernetes-ingress-service.tf
-- **Project Folder:** 05-ingress-TargetType-IP-terraform-manifests
+## Step-09: v10-kubernetes-ingress-service.tf
+- **Project Folder:** 06-ingress-InternalLB-terraform-manifests
+- We are going to change the `scheme` annotation to `internal
+```t
+    # Change from Internet Facing to Internal
+    "alb.ingress.kubernetes.io/scheme" = "internal"
+```
+- **Complete Ingress Service Terraform Manifest**
 ```t
 # Kubernetes Service Manifest (Type: Load Balancer)
 resource "kubernetes_ingress_v1" "ingress" {
   metadata {
-    name = "ingress-target-type-ip-demo"
+    name = "ingress-internal-lb-demo"
     annotations = {
       # Load Balancer Name
-      "alb.ingress.kubernetes.io/load-balancer-name" = "target-type-ip-ingress"
+      "alb.ingress.kubernetes.io/load-balancer-name" = "ingress-internal-lb-demo"
       # Ingress Core Settings
-      "alb.ingress.kubernetes.io/scheme" = "internet-facing"
+      # Creates External Application Load Balancer      
+      #"alb.ingress.kubernetes.io/scheme" = "internet-facing"
+      # Creates Internal Application Load Balancer
+      "alb.ingress.kubernetes.io/scheme" = "internal"
       # Health Check Settings
       "alb.ingress.kubernetes.io/healthcheck-protocol" =  "HTTP"
       "alb.ingress.kubernetes.io/healthcheck-port" = "traffic-port"
@@ -121,25 +133,11 @@ resource "kubernetes_ingress_v1" "ingress" {
       "alb.ingress.kubernetes.io/success-codes" = 200
       "alb.ingress.kubernetes.io/healthy-threshold-count" = 2
       "alb.ingress.kubernetes.io/unhealthy-threshold-count" = 2
-      ## SSL Settings
-      # Option-1: Using Terraform jsonencode Function
-      "alb.ingress.kubernetes.io/listen-ports" = jsonencode([{"HTTPS" = 443}, {"HTTP" = 80}])
-      # Option-2: Using Terraform File Function      
-      #"alb.ingress.kubernetes.io/listen-ports" = file("${path.module}/listen-ports/listen-ports.json")
-      "alb.ingress.kubernetes.io/certificate-arn" =  "${aws_acm_certificate.acm_cert.arn}"    
-      #"alb.ingress.kubernetes.io/ssl-policy" = "ELBSecurityPolicy-TLS-1-1-2017-01" #Optional (Picks default if not used)    
-      # SSL Redirect Setting
-      "alb.ingress.kubernetes.io/ssl-redirect" = 443
-      # External DNS - For creating a Record Set in Route53
-      "external-dns.alpha.kubernetes.io/hostname" = "tftarget-type-ip-501.stacksimplify.com"
-      # Target Type: IP (Defaults to Instance if not specified)
-      "alb.ingress.kubernetes.io/target-type" = "ip"
     }    
   }
-
   spec {
     ingress_class_name = "my-aws-ingress-class" # Ingress Class        
-    # Default Rule: Route requests to App3 if the DNS is "tfdefault101.stacksimplify.com"        
+    # Default Rule: Route requests to App3 if the DNS is "tfdefault101.mydomain.com"        
     default_backend {
       service {
         name = kubernetes_service_v1.myapp3_np_service.metadata[0].name
@@ -180,11 +178,14 @@ resource "kubernetes_ingress_v1" "ingress" {
   }
 }
 ```
+## Step-10: v11-kubernetes-curl-pod-for-testing-InternalLB.tf
+- **Project Folder:** 06-ingress-InternalLB-terraform-manifests
+- We are going to deploy a simple curl-pod to test the access to our Internal Load Balancers
 
-## Step-08: Execute Terraform Commands
+## Step-11: Execute Terraform Commands
 ```t
 # Change Directory 
-cd 05-ingress-TargetType-IP-terraform-manifests
+cd 06-ingress-InternalLB-terraform-manifests
 
 # Terraform Initialize
 terraform init
@@ -199,7 +200,7 @@ terraform plan
 terraform apply -auto-approve
 ```
 
-## Step-09: Verify Ingress Service
+## Step-12: Verify Ingress Service
 ```t
 # Verify Ingress Resource
 kubectl get ingress
@@ -210,42 +211,39 @@ kubectl get pods
 
 # Verify NodePort Services
 kubectl get svc
+
+# Verify Internal AWS Application Load Balancer 
+1. Login to AWS Mgmt Console
+2. Go to Services -> EC2 -> Load Balancers -> Load Balancer
+3. Go to Services -> EC2 -> Load Balancers -> Target Groups
 ```
 
-## Step-10: Verify External DNS Log
+## Step-13: Connect to curl-pod and Test the Applications load balanced using Internal Load Balancers
 ```t
-# Verify External DNS logs
-kubectl logs -f $(kubectl get po | egrep -o 'external-dns[A-Za-z0-9-]+')
+# Will open up a terminal session into the container
+kubectl exec -it curl-pod -- sh
+
+# We can now curl external addresses or internal services:
+curl http://google.com/
+curl <INTERNAL-INGRESS-LB-DNS>
+
+# Default Backend Curl Test
+curl internal-ingress-internal-lb-1839544354.us-east-1.elb.amazonaws.com
+
+# App1 Curl Test
+curl internal-ingress-internal-lb-1839544354.us-east-1.elb.amazonaws.com/app1/index.html
+
+# App2 Curl Test
+curl internal-ingress-internal-lb-1839544354.us-east-1.elb.amazonaws.com/app2/index.html
+
+# App3 Curl Test
+curl internal-ingress-internal-lb-1839544354.us-east-1.elb.amazonaws.com
 ```
 
-## Step-11: Verify Route53
-- Go to Services -> Route53
-- You should see **Record Set** added for 
-  - tftarget-type-ip-501.stacksimplify.com
-
-
-## Step-12: Access Application using newly registered DNS Name
-- Perform nslookup tests before accessing Application
-- Test if our new DNS entries registered and resolving to an IP Address
-```t
-# nslookup commands
-nslookup tftarget-type-ip-501.stacksimplify.com
-```
-## Step-13: Access Application 
-```t
-# Access App1
-http://tftarget-type-ip-501.stacksimplify.com/app1/index.html
-
-# Access App2
-http://tftarget-type-ip-501.stacksimplify.com/app2/index.html
-
-# Access Default App (App3)
-http://tftarget-type-ip-501.stacksimplify.com
-```
 ## Step-14: Clean-Up Ingress
 ```t
 # Change Directory 
-cd 05-ingress-TargetType-IP-terraform-manifests
+cd 06-ingress-InternalLB-terraform-manifests
 
 # Terraform Destroy
 terraform apply -destroy -auto-approve
