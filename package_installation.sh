@@ -27,18 +27,16 @@ unzip -q awscliv2.zip
 sudo ./aws/install
 rm -rf aws awscliv2.zip
 
-# Install kubectl
-echo "Installing kubectl..."
+# Install kubectl, kubectx and kubens
+sudo apt-get update
+sudo apt-get install -y apt-transport-https ca-certificates curl
 curl -fsSL https://pkgs.k8s.io/core:/stable:/v1.29/deb/Release.key | sudo gpg --dearmor -o /etc/apt/keyrings/kubernetes-apt-keyring.gpg
-echo "deb [signed-by=/etc/apt/keyrings/kubernetes-apt-keyring.gpg] https://pkgs.k8s.io/core:/stable:/v1.29/deb/ /" | sudo tee /etc/apt/sources.list.d/kubernetes.list > /dev/null
+echo 'deb [signed-by=/etc/apt/keyrings/kubernetes-apt-keyring.gpg] https://pkgs.k8s.io/core:/stable:/v1.29/deb/ /' | sudo tee /etc/apt/sources.list.d/kubernetes.list
 sudo apt-get update
 sudo apt-get install -y kubectl
-
-# Install kubectx and kubens
-echo "Installing kubectx and kubens..."
-sudo git clone --quiet https://github.com/ahmetb/kubectx /opt/kubectx
-sudo ln -sf /opt/kubectx/kubectx /usr/local/bin/kubectx
-sudo ln -sf /opt/kubectx/kubens /usr/local/bin/kubens
+sudo git clone https://github.com/ahmetb/kubectx /opt/kubectx
+sudo ln -s /opt/kubectx/kubectx /usr/local/bin/kubectx
+sudo ln -s /opt/kubectx/kubens /usr/local/bin/kubens
 
 # Set prompt to a simpler format
 export PS1="\u@\h \W$ "
