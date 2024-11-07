@@ -1,7 +1,7 @@
 #!/bin/bash
 
-set -e  # Exit script if any command fails
-set -o pipefail  # Catch any error in a piped command
+set -e  
+set -o pipefail 
 
 # Install prerequisites
 sudo apt-get update && sudo apt-get install -y \
@@ -27,16 +27,25 @@ unzip -q awscliv2.zip
 sudo ./aws/install
 rm -rf aws awscliv2.zip
 
-# Install kubectl, kubectx and kubens
-sudo apt-get update
-sudo apt-get install -y apt-transport-https ca-certificates curl
+# Create the keyring directory if it doesn't exist
+sudo mkdir -p /etc/apt/keyrings
+
+# Add the Kubernetes apt repository keyring
 curl -fsSL https://pkgs.k8s.io/core:/stable:/v1.29/deb/Release.key | sudo gpg --dearmor -o /etc/apt/keyrings/kubernetes-apt-keyring.gpg
+
+# Add the Kubernetes apt repository
 echo 'deb [signed-by=/etc/apt/keyrings/kubernetes-apt-keyring.gpg] https://pkgs.k8s.io/core:/stable:/v1.29/deb/ /' | sudo tee /etc/apt/sources.list.d/kubernetes.list
+
+# Update package list and install kubectl
 sudo apt-get update
 sudo apt-get install -y kubectl
+
+# Install kubectx and kubens
 sudo git clone https://github.com/ahmetb/kubectx /opt/kubectx
-sudo ln -s /opt/kubectx/kubectx /usr/local/bin/kubectx
-sudo ln -s /opt/kubectx/kubens /usr/local/bin/kubens
+sudo ln -sf /opt/kubectx/kubectx /usr/local/bin/kubectx
+sudo ln -sf /opt/kubectx/kubens /usr/local/bin/kubens
+
+echo "kubectl, kubectx, and kubens have been installed successfully."
 
 # Set prompt to a simpler format
 export PS1="\u@\h \W$ "
